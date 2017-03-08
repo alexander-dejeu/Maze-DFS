@@ -69,11 +69,10 @@ class Maze:
                     # If it was all walls it would evaulate as true hence the not
                     if not (self.maze_array[new_cell] & WALL_BITS):
                         neighbors.append((new_cell, i))
-                if self.state == 'solve'
+                if self.state == 'solve':
                     if (self.maze_array[cell] & WALLS[i]):
                         if not (self.maze_array[new_cell] & (BACKTRACK_BITS | SOLUTION_BITS)):
                             neighbors.append((new_cell, i))
-
         return neighbors
 
     # Connect two cells by knocking down the wall between them
@@ -86,13 +85,15 @@ class Maze:
     # Visit a cell along a possible solution path
     # Update solution bits of from_cell and backtrack bits of to_cell
     def visit_cell(self, from_cell, to_cell, compass_index):
-        # TODO: Logic for updating cell bits
+        self.maze_array[from_cell] &= ~SOLUTION_BITS
+        self.maze_array[from_cell] |= (WALLS[compass_index] << 8)
+        self.maze_array[to_cell] |= (OPPOSITE_WALLS[compass_index] << 12)
         self.draw_visited_cell(from_cell)
 
     # Backtrack from cell
     # Blank out the solution bits so it is no longer on the solution path
     def backtrack(self, cell):
-        # TODO: Logic for updating cell bits
+        self.maze_array[cell] &= ~SOLUTION_BITS
         self.draw_backtracked_cell(cell)
 
     # Visit cell in BFS search
