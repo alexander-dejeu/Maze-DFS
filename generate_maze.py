@@ -9,7 +9,6 @@ def create_dfs(m):
     visted_cells = 1
 
     while visted_cells < m.total_cells:
-        print(stack)
         unvisited_neighbors = m.cell_neighbors(cur_cell)
         if unvisited_neighbors:
             rand_index = random.randint(0, len(unvisited_neighbors)-1)

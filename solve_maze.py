@@ -31,8 +31,27 @@ def solve_dfs(m):
 
 # Solve maze using BFS algorithm, terminate with solution
 def solve_bfs(m):
-    # TODO: Implement solve_bfs
-    pass
+    queue = []
+    cur_cell = 0
+    direction = 0b0000
+    visited_cells = 0
+    queue.append((cur_cell, direction))
+
+    goal = m.total_cells-1
+    while cur_cell != goal and queue is not []:
+        cell = queue.pop(0)
+        cur_cell = cell[0]
+        cur_dir = cell[1]
+
+        m.bfs_visit_cell(cur_cell, cur_dir)
+        visited_cells += 1
+        m.refresh_maze_view()
+
+        unvisited_neighbors = m.cell_neighbors(cur_cell)
+        for cell in unvisited_neighbors:
+            queue.append((cell[0], cell[1]))
+    m.reconstruct_solution(cur_cell)
+    m.state = 'idle'
 
 
 def print_solution_array(m):
